@@ -1,0 +1,78 @@
+package com.tictactoe.controllers;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.tictactoe.models.Board;
+import com.tictactoe.models.Player;
+
+public class MainController {
+	public static final int PLAYER1_ID = 1;
+	public static final int PLAYER2_ID = 2;
+	public static int currentTurn;
+	public static Board currentBoard;
+	public static Player player1;
+	public static Player player2;
+	
+	public static void beginGame(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		currentBoard = new Board();
+		player1 = new Player();
+		player2 = new Player();
+		currentTurn = PLAYER1_ID;
+		playerTurn(request, response);
+	}
+	
+	public static void playerTurn(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		if (currentBoard == null || player1 == null || player2 == null) {
+			beginGame(request, response);
+			return;
+		}
+		PrintWriter pw = response.getWriter();
+		pw.write("<svg width=\"300\" height=\"300\">" + 
+				"		<rect width=\"300\" height=\"300\" style=\"border-style:solid;fill:rgb(255,255,255);stroke:rgb(0,0,0)\"/>" + 
+				"		<line x1=\"100\" y1=\"0\" x2=\"100\" y2=\"300\" style=\"stroke:rgb(0,0,0)\"/>" + 
+				"		<line x1=\"200\" y1=\"0\" x2=\"200\" y2=\"300\" style=\"stroke:rgb(0,0,0)\"/>" + 
+				"		<line x1=\"0\" y1=\"100\" x2=\"300\" y2=\"100\" style=\"stroke:rgb(0,0,0)\"/>" + 
+				"		<line x1=\"0\" y1=\"200\" x2=\"300\" y2=\"200\" style=\"stroke:rgb(0,0,0)\"/>");
+		int pos = 1;
+		List<Integer> remainPos = new ArrayList<>();
+		for (int x = 0; x < currentBoard.getBoard().length; x++) {
+			for (int y = 0; y < currentBoard.getBoard()[x].length; y++) {
+				if (currentBoard.getBoard()[x][y] == 0) {
+					remainPos.add(pos);
+					int x1 = 45 + 100*x;
+					int y1 = 45 + 100*y;
+					pw.write("<text x=\"" + x1 + "\" y=\"" + y1 + "\" fill=\"black\">" + pos + "</text>");
+				} else if (currentBoard.getBoard()[x][y] == PLAYER1_ID) {
+					int cx = 50 + 100*x;
+					int cy = 50 + 100*y;
+					pw.write("<circle cx=\"" + cx + "\" cy=\"" + cy + "\" r=\"25\" style=\"fill:rgb(255,255,255);stroke:rgb(0,0,0)\"/>");
+				} else if (currentBoard.getBoard()[x][y] == PLAYER2_ID) {
+					int x1 = 25 + 100*x;
+					int x2 = 75 + 100*x;
+					int y1 = 25 + 100*y;
+					int y2 = 75 + 100*y;
+					pw.write("<line x1=\"" + x1 + "\" y1=\"" + y1 + "\" x2=\"" + x2 + "\" y2=\"" + y2 + "\" style=\"stroke:rgb(0,0,0)\"/>");
+					pw.write("<line x1=\"" + x2 + "\" y1=\"" + y1 + "\" x2=\"" + x1 + "\" y2=\"" + y2 + "\" style=\"stroke:rgb(0,0,0)\"/>");
+				}
+				pos++;
+			}
+		}
+		pw.write("<svg/>");
+		if (currentTurn == PLAYER1_ID) {
+			pw.write("<h1>Player 1's Turn<h1/>");
+		} else {
+			pw.write("<h1>Player 2's Turn<h1/>");
+		}
+		pw.write("<br><form action = \"/TicTacToe/game\" method=\"post\"><p>Select a numbered square</p>");
+		for (int p : remainPos) {
+			pw.write("<button type=\"submit\">" + p + "</button>");
+		}
+		pw.write("</form>");
+	}
+}

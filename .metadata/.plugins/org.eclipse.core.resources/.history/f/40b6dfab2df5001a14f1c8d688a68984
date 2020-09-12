@@ -1,0 +1,36 @@
+package com.tictactoe.controllers;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.tictactoe.models.Board;
+import com.tictactoe.models.Player;
+
+public class MainController {
+	public static final int PLAYER1_ID = 1;
+	public static final int PLAYER2_ID = 2;
+	public static int currentTurn;
+	public static Board currentBoard;
+	public static Player player1;
+	public static Player player2;
+	
+	public static void beginGame(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		currentBoard = new Board();
+		player1 = new Player();
+		player2 = new Player();
+		currentTurn = PLAYER1_ID;
+		playerTurn(request, response);
+	}
+	
+	public static void playerTurn(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		if (currentBoard == null || player1 == null || player2 == null) {
+			beginGame(request, response);
+			return;
+		}
+		PrintWriter pw = response.getWriter();
+		pw.write();
+	}
+}

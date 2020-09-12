@@ -1,0 +1,23 @@
+package com.tictactoe.models;
+
+public class Player {
+	private int id;
+	private int score;
+	
+	public Player(int id) {
+		this.id = id;
+		this.score = 0;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	public int getId() {
+		return id;
+	}
+}

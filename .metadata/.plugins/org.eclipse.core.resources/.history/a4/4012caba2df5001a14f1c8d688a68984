@@ -1,0 +1,41 @@
+package com.tictactoe.controllers;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.tictactoe.models.Board;
+import com.tictactoe.models.Player;
+
+public class MainController {
+	public static final int PLAYER1_ID = 1;
+	public static final int PLAYER2_ID = 2;
+	public static int currentTurn;
+	public static Board currentBoard;
+	public static Player player1;
+	public static Player player2;
+	
+	public static void beginGame(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		currentBoard = new Board();
+		player1 = new Player();
+		player2 = new Player();
+		currentTurn = PLAYER1_ID;
+		playerTurn(request, response);
+	}
+	
+	public static void playerTurn(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		if (currentBoard == null || player1 == null || player2 == null) {
+			beginGame(request, response);
+			return;
+		}
+		PrintWriter pw = response.getWriter();
+		pw.write("<svg width=\"300\" height=\"300\">\r\n" + 
+				"		<rect width=\"300\" height=\"300\" style=\"border-style:solid;fill:rgb(255,255,255);stroke:rgb(0,0,0)\"/>" + 
+				"		<line x1=\"100\" y1=\"0\" x2=\"100\" y2=\"300\" style=\"stroke:rgb(0,0,0)\"/>" + 
+				"		<line x1=\"200\" y1=\"0\" x2=\"200\" y2=\"300\" style=\"stroke:rgb(0,0,0)\"/>" + 
+				"		<line x1=\"0\" y1=\"100\" x2=\"300\" y2=\"100\" style=\"stroke:rgb(0,0,0)\"/>" + 
+				"		<line x1=\"0\" y1=\"200\" x2=\"300\" y2=\"200\" style=\"stroke:rgb(0,0,0)\"/>");
+	}
+}

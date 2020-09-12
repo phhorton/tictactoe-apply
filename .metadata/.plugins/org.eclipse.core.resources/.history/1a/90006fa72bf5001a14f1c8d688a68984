@@ -1,0 +1,16 @@
+package com.tictactoe.controllers;
+
+import com.tictactoe.models.Board;
+import com.tictactoe.models.Player;
+
+public class MainController {
+	public static Board currentBoard;
+	public static Player player1;
+	public static Player player2;
+	
+	public static void beginGame() {
+		currentBoard = new Board();
+		player1 = new Player();
+		player2 = new Player();
+	}
+}

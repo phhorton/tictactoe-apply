@@ -1,0 +1,34 @@
+package com.tictactoe.models;
+
+public class Board {
+	private Integer[][] board;
+	
+	public Board() {
+		this.board = new Integer[3][3];
+		clear();
+	}
+	
+	public void clear() {
+		this.board[0][0] = 0;
+		this.board[0][1] = 0;
+		this.board[0][2] = 0;
+		this.board[1][0] = 0;
+		this.board[1][1] = 0;
+		this.board[1][2] = 0;
+		this.board[2][0] = 0;
+		this.board[2][1] = 0;
+		this.board[2][2] = 0;
+	}
+	
+	public boolean playerMove(int x, int y, int player) {
+		if (this.board[x][y] == 0) {
+			this.board[x][y] = player;
+			return true;
+		}
+		return false;
+	}
+	
+	public Integer[][] getBoard() {
+		return board;
+	}
+}

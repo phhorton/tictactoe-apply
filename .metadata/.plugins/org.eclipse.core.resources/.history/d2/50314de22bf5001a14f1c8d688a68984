@@ -1,0 +1,29 @@
+package com.tictactoe.controllers;
+
+import com.tictactoe.models.Board;
+import com.tictactoe.models.Player;
+
+public class MainController {
+	public static final int PLAYER1_ID = 1;
+	public static final int PLAYER2_ID = 2;
+	public static Board currentBoard;
+	public static Player player1;
+	public static Player player2;
+	public static int currentTurn;
+	
+	public static void beginGame() {
+		currentBoard = new Board();
+		player1 = new Player();
+		player2 = new Player();
+		currentTurn = PLAYER1_ID;
+		player1Turn();
+	}
+	
+	public static void player1Turn() {
+		if (currentBoard == null || player1 == null || player2 == null) {
+			beginGame();
+			return;
+		}
+		PrintWriter pw = 
+	}
+}
